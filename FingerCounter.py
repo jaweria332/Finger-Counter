@@ -48,7 +48,6 @@ while True:
         # We need to get landmark 4,8,12,16,20 - can refer to the mediapipe website
         fingers = []
 
-
         # For thumb
         if lmList[tipIds[0]][1] > lmList[tipIds[0] - 1][1]:
             fingers.append(1)
@@ -61,11 +60,17 @@ while True:
                 fingers.append(1)
             else:
                 fingers.append(0)
-        print(fingers)
 
-    # Getting height and width
-    h, w, c = overlayList[0].shape
-    img[0:h, 0:w] = overlayList[0]
+        totalFing = fingers.count(1)
+        print(totalFing)
+        # print(fingers)
+
+        # Getting height and width
+        h, w, c = overlayList[totalFing - 1].shape
+        img[0:h, 0:w] = overlayList[totalFing - 1]
+
+        cv2.rectangle(img, (20,255),(170,425),(0,255,0),cv2.FILLED)
+        cv2.putText(img,str(totalFing),(45,390),cv2.FONT_HERSHEY_COMPLEX,5,(255,255,255),5)
 
     cTime = time.time()
     fps = 1 / (cTime - pTime)
